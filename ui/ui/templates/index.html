@@ -1,0 +1,189 @@
+{% load static %}
+{% static "images" as baseUrl %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Aiotel</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="Free Website Template" name="keywords">
+        <meta content="Free Website Template" name="description">
+
+     
+
+        <!-- Google Font -->
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+        
+
+        <!-- Template Stylesheet -->
+        
+        <link href="{% static 'css/dropdown.css' %}" rel="stylesheet">
+        <style>
+                        .center {
+                                margin: auto;
+                                width: 50%;
+                                border: 3px solid green;
+                                padding: 10px;
+                                text-align: center;
+                                }
+                        .noborder {
+                                margin: auto;
+                                width: 50%;
+                                
+                                padding: 10px;
+                                text-align: center;
+                                }
+                        .right {
+                                float: right;
+                                width: 300px;
+                               
+                                padding: 10px;
+                                }
+                        h1 {
+                            color: #000033;
+                        }
+                        
+                        .dropdown {
+                                    position: relative;
+                                    display: inline-block;
+                                    }
+
+                                    .dropdown-content {
+                                    display: none;
+                                    position: absolute;
+                                    background-color: #f9f9f9;
+                                    min-width: 160px;
+                                    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                                    padding: 12px 16px;
+                                    z-index: 1;
+                                    }
+
+                                    .dropdown:hover .dropdown-content {
+                                    display: block;
+                                    }
+                                    .main {
+                                            
+                                            float: right;
+                                            min-height: 180px;
+                                            margin: 2px;
+                                            padding: 10px;
+                                            min-width: 117px;
+                                            position:relative;
+                                        }
+
+                                    #bottom {
+                                            position:absolute;                 
+                                            bottom:0;                         
+                                            right:0;                         
+                                        }
+                                    .topright {
+                                            float: right;
+
+                                        }
+                                                                    
+
+        </style>
+         
+    </head>
+
+    <body style="background-color: #cacadb;">
+        <div class="container" id="main" role="main">
+            
+        <div class="topright">
+            <ul class="menu">
+                    {% if user.is_authenticated %}
+                    <li>Hello, {{user.first_name}}</li>
+                    <li><a href="accounts/logout">Logout</a></li>
+                    {% else %}	
+                    <li><a href="accounts/register">Register</a></li>
+                    <li><a href="accounts/login">Login</a></li>
+                    {% endif %}
+            </ul>
+        </div>
+        </div>
+        <div class="noborder">
+         <h1 id="h1">FACE Recognition And OCR</h1> 
+        </div>
+            <div class="container" id="main" role="main">
+                                    <ul class="menu">
+                                        
+                                        <li><a onclick="changeImage()">ID CARD ↓</a>
+                                            <ul class="submenu">
+                                                <li><a href="{% url 'stream' %}" >License</a></li>
+                                                <li><a href="{% url 'stream' %}">Regular</a></li>
+                                                <li><a href="{% url 'stream' %}">Residence</a></li>
+                                             
+                                            </ul>
+                                        </li>
+                                    </ul>
+            </div>
+                   
+                   
+                    
+                   
+                        <div class="noborder">
+						
+                            <img height="300px" width ="300px" src="{% static '4.png' %}" id="myImage">
+                            
+                               
+                            <h2 id="nameid"></h2>
+							
+							
+                            
+                        </div>
+                   
+            
+        <div class="main">
+            <div id="#bottom">
+                    <div id="iframeDisplay"></div> 
+        </div>
+                    <div class="noborder">
+                    <img  height="70px" width="70px" onclick="displayIframe()" src="{% static 'chatbotlogo1.png' %}"></img></div>
+                
+        </div>
+
+    <script>
+        function changeImage() {
+            var image = document.getElementById('myImage');
+			var name='';
+            if (image.src.match("{% static '6.png' %}")) 
+                {
+                     image.src ="{% static '4.png' %}";}
+            else {
+                     image.src = "{% static '6.png' %}"; }
+			
+            
+            var stuff=new Array("{{names}}");
+          
+
+		
+			/*for(i=0;i<stuff.length;i++)
+			{
+			
+			console.log(stuff[i]);
+			name=name+stuff[i];
+			}*/
+			console.log('displaying name',name);
+			document.getElementById('nameid').innerHTML=stuff[0];
+        
+			//return name;
+
+
+        }
+       </script>
+       
+        
+      
+       <script>
+        function displayIframe() {
+        document.getElementById("iframeDisplay").innerHTML = "<iframe src=\"{% url 'chatbot' %}\" height=\"400\" width=\"500\" ></iframe>";
+
+    }     
+        
+        </script>
+        <!-- Template Javascript -->
+        
+    </body>
+</html>
